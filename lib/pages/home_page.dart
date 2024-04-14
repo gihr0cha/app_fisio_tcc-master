@@ -1,5 +1,4 @@
 import 'package:app_fisio_tcc/assets/colors/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'navegation_page.dart';
@@ -21,28 +20,29 @@ class _HomePageState extends State<HomePage> {
         title: const Column(
           children: [
             Text(
-              'FisioConecta',
+              'FisioConecta - Home',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 22,
                   color: AppColors.whiteApp),
             ),
-            Text(
-              'Home',
-              style: TextStyle(fontSize: 18, color: AppColors.whiteApp),
-            ),
           ],
         ),
         toolbarHeight: 72,
         centerTitle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(25),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.go('/pacientes');
         },
-        child: const Icon(Icons.add),
         backgroundColor: const Color(0xff4a9700),
+        child: const Icon(Icons.add),
       ),
       body: Container(
         margin: const EdgeInsets.all(10),
