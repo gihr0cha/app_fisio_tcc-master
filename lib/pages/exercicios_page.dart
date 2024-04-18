@@ -1,4 +1,5 @@
 import 'package:app_fisio_tcc/assets/colors/colors.dart';
+import 'package:app_fisio_tcc/repositories/procedimentos_reepository.dart';
 import 'package:flutter/material.dart';
 import 'navegation_page.dart';
 
@@ -12,6 +13,8 @@ class ExerciciosPage extends StatefulWidget {
 class _ExerciciosPageState extends State<ExerciciosPage> {
   @override
   Widget build(BuildContext context) {
+    final tabela = ProcedimeentosRepository.tabela;
+
     return Scaffold(
       backgroundColor: AppColors.green2,
       appBar: AppBar(
@@ -19,7 +22,15 @@ class _ExerciciosPageState extends State<ExerciciosPage> {
         title: const Column(
           children: [
             Text(
-              'FisioConecta - Exercícios',
+              'FisioConecta ',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 22,
+                  color: AppColors.whiteApp),
+            ),
+            Text(
+              'Exercícios/Procedimentos',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -28,7 +39,7 @@ class _ExerciciosPageState extends State<ExerciciosPage> {
             ),
           ],
         ),
-        toolbarHeight: 72,
+        toolbarHeight: 80,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -48,6 +59,25 @@ class _ExerciciosPageState extends State<ExerciciosPage> {
             bottomRight: Radius.circular(18),
           ),
         ),
+        child: ListView.separated(
+            itemBuilder: (BuildContext context, int procedimentos) {
+              return ListTile(
+                leading: SizedBox(
+                  width: 40,
+                  child: Image.asset(tabela[procedimentos].icone),
+                ),
+                title: Text(
+                  tabela[procedimentos].nome,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            },
+            padding: const EdgeInsets.all(16),
+            separatorBuilder: (_, __) => const Divider(),
+            itemCount: tabela.length),
       ),
       bottomNavigationBar: const NavigacaoBar(),
     );

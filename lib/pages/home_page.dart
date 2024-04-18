@@ -1,4 +1,5 @@
 import 'package:app_fisio_tcc/assets/colors/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'navegation_page.dart';
@@ -13,18 +14,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    String email = FirebaseAuth.instance.currentUser!
+        .email!; // Replace with actual username from your data source
+
     return Scaffold(
       backgroundColor: AppColors.green2,
       appBar: AppBar(
         backgroundColor: const Color(0xff4a9700),
-        title: const Column(
+        title: Column(
           children: [
-            Text(
+            const Text(
               'FisioConecta - Home',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 22,
+                  color: AppColors.whiteApp),
+            ),
+            Text(
+              'Olá, $email!',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
                   color: AppColors.whiteApp),
             ),
           ],
