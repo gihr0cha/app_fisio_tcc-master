@@ -13,9 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  Widget build(BuildContext context) {
-    String email = FirebaseAuth.instance.currentUser!
-        .email!; // Replace with actual username from your data source
+   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    var nome = user?.displayName ?? '';
+    nome = nome.split(' ')[0];
 
     return Scaffold(
       backgroundColor: AppColors.green2,
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                   color: AppColors.whiteApp),
             ),
             Text(
-              'Olá, $email!',
+              'Olá, $nome!',
               textAlign: TextAlign.center,
               style: const TextStyle(
                   fontWeight: FontWeight.w400,
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/pacientes');
+          context.go('/registerPacients');
         },
         backgroundColor: const Color(0xff4a9700),
         child: const Icon(Icons.add),
