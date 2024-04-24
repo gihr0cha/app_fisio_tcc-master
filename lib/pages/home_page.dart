@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'navegation_page.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'registerPacients_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key});
@@ -15,8 +17,10 @@ class _HomePageState extends State<HomePage> {
   @override
    Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+    FirebaseDatabase database = FirebaseDatabase.instance;
     var nome = user?.displayName ?? '';
     nome = nome.split(' ')[0];
+    var paciente = database.ref([user]).child('fisioterapeutas/${user?.displayName}').get();
 
     return Scaffold(
       backgroundColor: AppColors.green2,
@@ -69,6 +73,9 @@ class _HomePageState extends State<HomePage> {
             bottomRight: Radius.circular(18),
           ),
         ),
+        child: ListTile(
+          title: Text(paciente['nome']),
+          subtitle: Text(paciente['email'])),
       ),
       bottomNavigationBar: const NavigacaoBar(),
     );

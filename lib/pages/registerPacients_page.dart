@@ -19,25 +19,31 @@ class _RegisterPacientsState extends State<RegisterPacients> {
       app: Firebase.app(),
       databaseURL: 'https://fisioconecta-b9fcf-default-rtdb.firebaseio.com/');
   FirebaseDatabase database = FirebaseDatabase.instance;
-  String? _nomepaciente;
+  String? nomepaciente;
+  String? email;
+  String paciente = 'paciente';
+
+  String fisio = 'fisioterapeutas/${FirebaseAuth.instance.currentUser!.displayName}';
 
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form!.validate()) {
       form.save();
-      print(_nomepaciente);
+      print(nomepaciente);
+      paciente = nomepaciente!;
       return true;
     } else {
       return false;
     }
   }
 
-   void validateAndSubmit() {
+  void validateAndSubmit() {
     if (validateAndSave()) {
-      database.ref().child('pacientes').push().set({
-        'fisio': user?.displayName,
-        'nome': _nomepaciente,
-        
+      database.ref().child(fisio).push().set({
+        paciente: {
+          'nome': nomepaciente,
+          'email': email,
+        }
       });
       print(database);
     }
@@ -74,10 +80,12 @@ class _RegisterPacientsState extends State<RegisterPacients> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) => value!.isEmpty ? 'inválido' : null,
-                  onSaved: (newValue) => _nomepaciente = newValue,
+                  onSaved: (newValue) => nomepaciente = newValue,
                 ),
                 const SizedBox(height: 24),
                 TextFormField(
+                  validator: (value) => value!.isEmpty ? 'inválido' : null,
+                  onSaved: (newValue) => email = newValue,
                   style: AppTheme.themeData.inputDecorationTheme.labelStyle,
                   decoration: InputDecoration(
                       label: const Text(
